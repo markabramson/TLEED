@@ -1,0 +1,469 @@
+TRUTH: Begin Initial Points
+
+fx =
+
+    0.2386
+
+   Points identified/evaluated: 1 / 1
+TRUTH: End Initial Points
+ 
+TRUTH:    Mesh size = 1
+TRUTH: Begin Search 1
+   Search type: LHS
+   # Points:    64
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+   Points identified/evaluated: 64 / 64
+TRUTH: End Search 1
+TRUTH: Begin Poll 1
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+    0.3391
+
+
+fx =
+
+    0.3390
+
+
+fx =
+
+    0.3566
+
+
+fx =
+
+    0.3750
+
+
+fx =
+
+    0.3596
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+    0.3417
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+   Inf
+
+
+fx =
+
+    0.2363
+
+   Points identified/evaluated: 84 / 26
+TRUTH: End Poll 1
+TRUTH:    Success = 1
