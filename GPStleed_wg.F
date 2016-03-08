@@ -14,20 +14,19 @@ C *********************************************************************
 	  
 C --- Declarations
       implicit none
-      mwSize    narg, strlen
-      parameter (narg = 8)
+      mwSize    strlen
       character*100 problem_dir
       integer*4 nlhs, nrhs, mxGetString, status
       mwIndex k
       mwPointer mxGetPr, mxGetM, mxGetN, mxCreateDoubleMatrix
-      mwPointer plhs(*), prhs(*), arg(narg)
+      mwPointer plhs(*), prhs(*), arg(4)
 C
 C --- OTHER NON-EXECUTABLE STATEMENTS:
 C
 C *********************** BEGIN EXECUTABLE CODE ************************
 C
 C --- Error check numbers of input and output arguments
-      if (nrhs .ne. 7) call mexErrMsgTxt('7 input args required.')
+      if (nrhs .ne. 3) call mexErrMsgTxt('3 input args required.')
       if (nlhs .ne. 1) call mexErrMsgTxt('1 output arg required.')
 C
 C --- Store working directory in string
@@ -36,16 +35,14 @@ C --- Store working directory in string
       if (status .ne. 0) call mexErrMsgTxt('mxGetString failed')
 C
 C --- Assign pointers to input and output variables
-      do 100 k = 2, nrhs
-         arg(k) = mxGetPr(prhs(k))
-100   continue
-      plhs(1)   = mxCreateDoubleMatrix(1,1,0)
-      arg(narg) = mxGetPr(plhs(1))
+      arg(2)  = mxGetPr(prhs(2))
+      arg(3)  = mxGetPr(prhs(3))
+      plhs(1) = mxCreateDoubleMatrix(1,1,0)
+      arg(4)  = mxGetPr(plhs(1))
 C
 C --- Make the call to KLEED
       call GPStleed_wg(problem_dir(1:strlen),%val(arg(2)),%val(arg(3)),
-     &                          %val(arg(4)),%val(arg(5)),%val(arg(6)),
-     &                          %val(arg(7)),%val(arg(8)))
+     &                                       %val(arg(4)))
       return
       end
 
@@ -53,25 +50,27 @@ C**********************************************************************
 C  GPSkleed_wg:  This wrapper file converts the double precision used
 C                by MATLAB to single precision used by KLEED.
 C**********************************************************************
-      subroutine GPStleed_wg(p_dir,DIR,RANK,PARM,MINB,MAXB,NTYPE,FITVAL)
+      subroutine GPStleed_wg(p_dir,PARM,NTYPE,FITVAL)
 
       implicit none
       integer NMAX, NDIM
       parameter (NMAX = 14, NDIM = 3)
       character*(*) p_dir
       integer DIR, RANK, NTYPE(NMAX), I, J
-      real*8 PARM(NMAX,NDIM), MINB(NMAX,NDIM), MAXB(NMAX,NDIM), FITVAL
+      real*8 PARM(NMAX,NDIM), FITVAL
       real   PARM4(NMAX,NDIM),MINB4(NMAX,NDIM),MAXB4(NMAX,NDIM),FITVAL4
 
-      FITVAL  = 0.0
-      FITVAL4 = FITVAL
+      DIR  = 0
+      RANK = 0
       do 100 I = 1,NMAX
          do 200 J = 1,3
             PARM4(I,J) = PARM(I,J)
-            MINB4(I,J) = MINB(I,J)
-            MAXB4(I,J) = MAXB(I,J)
+            MINB4(I,J) = 0.0
+            MAXB4(I,J) = 0.0
  200     enddo                
  100  enddo          
+      FITVAL  = 0.0
+      FITVAL4 = FITVAL
 
       call GPStleed1(p_dir,DIR,RANK,PARM4,MINB4,MAXB4,NTYPE,FITVAL4)
       FITVAL = FITVAL4

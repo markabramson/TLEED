@@ -3,11 +3,10 @@
 % ------------------------------------------------------------------------------
 % VARIABLES:
 %  Param       = structure of parameters set by the Parameter file
+%    .fixZ     =   flag for fixing the z-positions equal to the starting point
 %    .iterate0 =   initial iterate
 %    .p_dir    =   directory where the problem files are located
-%    .delta    =   required parameter (0.4)
-%    .rank     =   required parameter (0)
-%    .nMax     =   number of atoms (14)
+%    .nAtoms   =   number of atoms (14)
 %    .nDim     =   dimension of the atom position variable (3)
 %    .A        =   matrix of linear/bound constraint coefficient
 %    .l        =   vector of linear/bound constraint lower bounds 
@@ -17,27 +16,41 @@
 %===============================================================================
 function Param = tleed_nomadm_Param
 
+% Fix z values
+Param.fixZ = 1;
+
 % Get initial iterate
 Param.iterate0 = tleed_nomadm_x0;
 
 % Set input arguments for Fortran code
-Param.p_dir    = fileparts(mfilename('fullpath'));
-Param.delta    = 0.4;
-Param.dir      = int32(0);
-Param.rank     = int32(0);
-Param.nMax     = length(Param.iterate0.p);
-n              = length(Param.iterate0.x);
-m              = n - Param.nMax;
-Param.nDim     = n/Param.nMax;
+Param.p_dir  = fileparts(mfilename('fullpath'));
+Param.nAtoms = length(Param.iterate0.p);
+n            = length(Param.iterate0.x);
+Param.nDim   = n/Param.nAtoms;
 
 % Set linear/bound constraint parameters
-Param.A        = eye(n);
-Param.l        = [-2.4*ones(3,1); -0.4*ones(5,1); 0.8*ones(6,1); -10*ones(m,1)];
-Param.u        = [-0.4*ones(3,1);  0.8*ones(5,1); 2.2*ones(6,1);  10*ones(m,1)];
+if Param.fixZ
+   zl = Param.iterate0.x(1:Param.nAtoms);
+   zu = Param.iterate0.x(1:Param.nAtoms);
+else
+   zl = [-2.4*ones(3,1); -0.4*ones(5,1); 0.8*ones(6,1)];
+   zu = [-0.4*ones(3,1);  0.8*ones(5,1); 2.2*ones(6,1)];
+end
+m       = n - Param.nAtoms;
+Param.A = eye(n);
+Param.l = [zl; -10*ones(m,1)];
+Param.u = [zu;  10*ones(m,1)];
 
 % Set categorical variable lists of allowable variables
-for i = 1:Param.nMax
+for i = 1:Param.nAtoms
 	Param.plist{i} = {1,2};
+end
+
+% If work directory not set up, construct it
+work_dir = [Param.p_dir, filesep, 'work000'];
+if ~exist(work_dir,'dir')
+   [success,message] = mkdir(work_dir);
+   if ~success, error(message); end
 end
 
 % PAST DATA (from Omega file)

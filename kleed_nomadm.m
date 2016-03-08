@@ -5,28 +5,24 @@
 %                the NOMADm optimization software.
 % ------------------------------------------------------------------------------
 % VARIABLES:
-%  fx       = computed r-factor of the given structure
-%  x        = vector of atom xyz positions
-%  p        = cell array of atom identities (1 = Ni, 2 = Li)
-%  Param    = structure of parameters set by the Parameter file
-%    .nMax  =   number of atoms (14)
-%    .nDim  =   dimension of the atom position variable (3)
-%    .delta =   required parameter (0.4)
-%    .rank  =   required parameter (0)
-%    .p_dir =   directory where the problem files are located
-%  PARM     = NMAX x NDIM matrix containing a reshape of x
-%  MINB     = required parameter (x - 0.4)
-%  MAXB     = required parameter (x + 0.4)
-%  NTYPE    = a conversion of p from cell array to numerical array
+%  fx        = computed r-factor of the given structure (fx >= 1.6: invalid)
+%  x         = vector of atom xyz positions
+%  p         = cell array of atom identities (1 = Ni, 2 = Li)
+%  Param     = structure of parameters set by the Parameter file
+%    .nAtoms =   number of atoms (14)
+%    .nDim   =   dimension of the atom position variable (3)
+%    .p_dir  =   directory where the problem files are located
+%  xVar      = nAtoms x nDim matrix containing a reshape of x
+%  pVar      = a conversion of p from cell array to numerical array
 %===============================================================================
 function fx = kleed_nomadm(x,p)
 
+% Process input arguments into Fortran arguments
 Param = getappdata(0,'PARAM');
-PARM  = reshape(x,Param.nMax,Param.nDim);
-MINB  = PARM - Param.delta*ones(Param.nMax,Param.nDim);
-MAXB  = PARM + Param.delta*ones(Param.nMax,Param.nDim);
-NTYPE = int32(cell2mat(p));
+xVar  = reshape(x,Param.nAtoms,Param.nDim);
+pVar  = int32(cell2mat(p));
 
-% Call mex function to do KLEED calculations
-fx = GPSkleed_wg(Param.p_dir,Param.dir,Param.rank,PARM,MINB,MAXB,NTYPE);
+% Call mex function to do KLEED calculations (values of >= 1.6 are invalid)
+fx = GPSkleed_wg(Param.p_dir, xVar, pVar);
+if fx >= 1.6, fx = Inf; end
 return
